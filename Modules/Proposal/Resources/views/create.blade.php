@@ -37,8 +37,7 @@
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-control" required>
                                 <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>Approved
-                                </option>
+                                <option value="agreed" {{ old('status') == 'agreed' ? 'selected' : '' }}>Agreed</option>
                                 <option value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>Rejected
                                 </option>
                             </select>

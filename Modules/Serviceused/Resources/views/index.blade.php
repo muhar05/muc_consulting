@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="row mb-3">
-        <div class="col-md-12">
+        <div class="col-12">
             <h2>Service Used List</h2>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
                     <span>All Service Used</span>
                     <a href="{{ route('serviceused.create') }}" class="btn btn-primary btn-sm">Tambah Service Used</a>
                 </div>
@@ -18,7 +18,7 @@
                     @if ($serviceuseds->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped align-middle">
-                                <thead>
+                                <thead class="table-light">
                                     <tr>
                                         <th>Proposal Number</th>
                                         <th>Nama Service</th>
@@ -31,7 +31,7 @@
                                     @foreach ($serviceuseds as $item)
                                         <tr>
                                             <td>{{ $item->proposal_number }}</td>
-                                            <td>{{ $item->service_name }}</td>
+                                            <td class="text-break" style="max-width:200px;">{{ $item->service_name }}</td>
                                             <td>
                                                 @php
                                                     $badge =
@@ -54,7 +54,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('serviceused.edit', $item->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                    class="btn btn-warning btn-sm mb-1 mb-md-0">Edit</a>
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal" data-id="{{ $item->id }}">
                                                     Delete
@@ -120,7 +120,6 @@
                     })
                     .then(response => {
                         if (response.ok) {
-                            // Hapus baris dari tabel
                             document.querySelector('button[data-id="' + serviceusedIdToDelete + '"]').closest('tr')
                                 .remove();
                             var modal = bootstrap.Modal.getInstance(deleteModal);

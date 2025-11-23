@@ -18,5 +18,8 @@ Route::prefix('proposal')->group(function() {
     Route::get('/index', [ProposalController::class, 'index'])->name('proposal.index');
     Route::get('/create', [ProposalController::class, 'create'])->name('proposal.create');
     Route::post('/', [ProposalController::class, 'store'])->name('proposal.store');
-    // Tambahkan route lain jika perlu (edit, update, destroy, show)
+    Route::get('/{id}', [ProposalController::class, 'show'])->name('proposal.show');
+    Route::get('/{id}/edit', [ProposalController::class, 'edit'])->name('proposal.edit');
+    Route::put('/{id}', [ProposalController::class, 'update'])->name('proposal.update');
+    Route::delete('/{id}', [ProposalController::class, 'destroy'])->name('proposal.destroy');
 });

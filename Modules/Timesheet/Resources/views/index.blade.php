@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="row mb-3">
-        <div class="col-md-12">
+        <div class="col-12">
             <h2>Timesheet List</h2>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
                     <span>All Timesheet</span>
                     <a href="{{ route('timesheet.create') }}" class="btn btn-primary btn-sm">Add Timesheet</a>
                 </div>
@@ -17,7 +17,7 @@
                     @if ($timesheets->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped align-middle">
-                                <thead>
+                                <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
                                         <th>Date</th>
@@ -40,10 +40,10 @@
                                                 {{ $employeeList[$item->employees_id] ?? '-' }}
                                             </td>
                                             <td>{{ $item->serviceused_id }}</td>
-                                            <td>{{ $item->description }}</td>
+                                            <td class="text-break" style="max-width:200px;">{{ $item->description }}</td>
                                             <td>
                                                 <a href="{{ route('timesheet.edit', $item->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                    class="btn btn-warning btn-sm mb-1 mb-md-0">Edit</a>
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal" data-id="{{ $item->id }}">
                                                     Delete
@@ -109,7 +109,6 @@
                     })
                     .then(response => {
                         if (response.ok) {
-                            // Hapus baris dari tabel
                             document.querySelector('button[data-id="' + timesheetIdToDelete + '"]').closest('tr')
                                 .remove();
                             var modal = bootstrap.Modal.getInstance(deleteModal);

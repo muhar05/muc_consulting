@@ -52,7 +52,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
+                            <a class="navbar-brand" href="{{ url('/') }}">
                                 MUC Mini Project
                             </a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

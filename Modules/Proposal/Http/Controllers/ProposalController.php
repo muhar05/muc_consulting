@@ -39,7 +39,7 @@ class ProposalController extends Controller
             // 'number' dihapus dari validasi
             'year' => 'required|integer',
             'description' => 'nullable|string|max:100',
-            'status' => 'required|string',
+            'status' => 'required|in:pending,agreed,rejected',
         ]);
 
         // Generate number otomatis
@@ -96,10 +96,8 @@ class ProposalController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'number' => 'required|string|max:255',
-            'year' => 'required|integer',
             'description' => 'nullable|string',
-            'status' => 'required|string',
+            'status' => 'required|in:pending,agreed,rejected',
         ]);
 
         $proposal = ProposalModel::findOrFail($id);
@@ -117,6 +115,10 @@ class ProposalController extends Controller
     {
         $proposal = ProposalModel::findOrFail($id);
         $proposal->delete();
+
+        if (request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
 
         return redirect()->route('proposal.index')->with('success', 'Proposal deleted successfully.');
     }

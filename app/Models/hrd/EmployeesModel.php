@@ -10,8 +10,9 @@ class EmployeesModel extends Model
     use HasFactory;
     protected $connection = 'mysql_hrd';
     protected $table = 'employees'; // sesuaikan dengan nama table di DB
-    
+
     protected $fillable = [
-        // kolom-kolom yang bisa di-fill
+        'fullname',
+        'status',
     ];
 }

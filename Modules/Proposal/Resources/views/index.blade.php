@@ -12,10 +12,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>All Proposal</span>
-                    <!-- <a href="{{ url('proposal/create') }}" class="btn btn-primary btn-sm">Add New Proposal</a> -->
+                    <a href="{{ url('proposal/create') }}" class="btn btn-primary btn-sm">Add New Proposal</a>
                 </div>
                 <div class="card-body">
-                    @if($proposals->count() > 0)
+                    @if ($proposals->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead>
@@ -27,7 +27,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($proposals as $proposal)
+                                    @foreach ($proposals as $proposal)
                                         <tr>
                                             <td>{{ $proposal->number }}</td>
                                             <td>{{ $proposal->year ?? '-' }}</td>
@@ -38,7 +38,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     @else
                         <div class="alert alert-info">
                             No employees found.

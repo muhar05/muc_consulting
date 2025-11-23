@@ -12,9 +12,11 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Modules\Employees\Http\Controllers\EmployeesController;         
 
 Route::prefix('employees')->group(function() {
-    Route::get('/index', 'EmployeesController@index')->name('employees.index');
+    Route::get('/', 'EmployeesController@index')->name('employees.index'); // Tambahkan ini
+    Route::get('/index', 'EmployeesController@index');
     Route::get('/create', 'EmployeesController@create')->name('employees.create');
     Route::post('/', 'EmployeesController@store')->name('employees.store');
     Route::get('/{id}', 'EmployeesController@show')->name('employees.show');

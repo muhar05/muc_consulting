@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Employees\Http\Controllers\EmployeesController;
+use Modules\Proposal\Http\Controllers\ProposalController;   
 
 /*
 |--------------------------------------------------------------------------

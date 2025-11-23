@@ -16,11 +16,8 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $timesheets = \App\Models\activity\TimesheetModel::all();
-
-        // Ambil semua employee dari database HRD
+        $timesheets = \App\Models\activity\TimesheetModel::with(['serviceused.proposal'])->get();
         $employeeList = \App\Models\hrd\EmployeesModel::pluck('fullname', 'id')->toArray();
-
         return view('timesheet::index', compact('timesheets', 'employeeList'));
     }
 
@@ -33,7 +30,8 @@ class TimesheetController extends Controller
         // Ambil data employee dan serviceused untuk select option
         $employees = \App\Models\hrd\EmployeesModel::all();
         $serviceuseds = \App\Models\marketing\ServiceusedModel::all();
-        return view('timesheet::create', compact('employees', 'serviceuseds'));
+        $proposals = \App\Models\marketing\ProposalModel::all();
+        return view('timesheet::create', compact('employees', 'serviceuseds', 'proposals'));
     }
 
     /**

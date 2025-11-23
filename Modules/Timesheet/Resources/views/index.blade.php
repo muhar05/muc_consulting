@@ -19,28 +19,39 @@
                             <table class="table table-bordered table-striped align-middle">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Date</th>
-                                        <th>Time Start</th>
-                                        <th>Time Finish</th>
-                                        <th>Employee</th>
-                                        <th>Service Used ID</th>
-                                        <th>Description</th>
+                                        <th>Tanggal</th>
+                                        <th>Karyawan</th>
+                                        <th>Proposal Number</th>
+                                        <th>Service Name</th>
+                                        <th>Waktu Mulai</th>
+                                        <th>Waktu Selesai</th>
+                                        <th>Total Jam</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($timesheets as $item)
                                         <tr>
-                                            <td>{{ $item->id }}</td>
                                             <td>{{ $item->date }}</td>
+                                            <td>{{ $employeeList[$item->employees_id] ?? '-' }}</td>
+                                            <td>
+                                                {{ optional($item->serviceused->proposal)->number ?? '-' }}
+                                            </td>
+                                            <td>
+                                                {{ optional($item->serviceused)->service_name ?? '-' }}
+                                            </td>
                                             <td>{{ $item->timestart }}</td>
                                             <td>{{ $item->timefinish }}</td>
                                             <td>
-                                                {{ $employeeList[$item->employees_id] ?? '-' }}
+                                                @php
+                                                    $start = strtotime($item->timestart);
+                                                    $finish = strtotime($item->timefinish);
+                                                    $totalMinutes = $finish > $start ? ($finish - $start) / 60 : 0;
+                                                    $hours = floor($totalMinutes / 60);
+                                                    $minutes = $totalMinutes % 60;
+                                                    printf('%02d:%02d', $hours, $minutes);
+                                                @endphp
                                             </td>
-                                            <td>{{ $item->serviceused_id }}</td>
-                                            <td class="text-break" style="max-width:200px;">{{ $item->description }}</td>
                                             <td>
                                                 <a href="{{ route('timesheet.edit', $item->id) }}"
                                                     class="btn btn-warning btn-sm mb-1 mb-md-0">Edit</a>

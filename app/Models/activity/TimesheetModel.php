@@ -24,4 +24,9 @@ class TimesheetModel extends Model
     {
         return $this->belongsTo(\App\Models\hrd\EmployeesModel::class, 'employees_id');
     }
+	
+	public function serviceused()
+    {
+        return $this->belongsTo(\App\Models\marketing\ServiceusedModel::class, 'serviceused_id');
+    }
 }

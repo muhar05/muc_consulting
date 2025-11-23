@@ -24,4 +24,9 @@ class ServiceusedModel extends Model
     {
         return $this->hasMany(\App\Models\activity\TimesheetModel::class, 'serviceused_id');
     }
+	
+	public function proposal()
+    {
+        return $this->belongsTo(\App\Models\marketing\ProposalModel::class, 'proposal_id');
+    }
 }

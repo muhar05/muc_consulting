@@ -9,7 +9,19 @@ class ServiceusedModel extends Model
 {
     use HasFactory;
     protected $connection = 'mysql_marketing';
-    protected $table = 'serviceused'; // atau nama table yang sesuai
-    
-    protected $fillable = [];
+    protected $table = 'serviceused';
+
+    // Tambahkan field yang boleh diisi massal
+    protected $fillable = [
+        'proposal_id',
+        'service_name',
+        'status',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function timesheets()
+    {
+        return $this->hasMany(\App\Models\activity\TimesheetModel::class, 'serviceused_id');
+    }
 }

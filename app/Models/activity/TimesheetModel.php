@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TimesheetModel extends Model
 {
     use HasFactory;
+    protected $table = 'timesheet';
+    protected $connection = 'mysql_activity'; // <-- tambahkan baris ini
 }

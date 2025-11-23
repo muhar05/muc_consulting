@@ -74,10 +74,12 @@
                                             class="{{ Request::is('proposal/index') ? 'active' : '' }}">Proposal</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#">Serviceused</a>
+                                        <a href="{{ url('serviceused/index') }}"
+                                            class="{{ Request::is('serviceused/index') ? 'active' : '' }}">ServiceUsed</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#">Timesheet</a>
+                                        <a href="{{ url('timesheet/index') }}"
+                                            class="{{ Request::is('timesheet/index') ? 'active' : '' }}">Timesheet</a>
                                     </li>
                                 </ul>
                             </div>

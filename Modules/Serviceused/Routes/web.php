@@ -1,4 +1,6 @@
 <?php
+use Modules\Serviceused\Http\Controllers\ServiceusedController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,5 +14,10 @@
 */
 
 Route::prefix('serviceused')->group(function() {
-    Route::get('/', 'ServiceusedController@index');
+    Route::get('/index', [ServiceusedController::class, 'index'])->name('serviceused.index');
+    Route::get('/create', [ServiceusedController::class, 'create'])->name('serviceused.create');
+    Route::post('/', [ServiceusedController::class, 'store'])->name('serviceused.store');
+    Route::get('/{id}/edit', [ServiceusedController::class, 'edit'])->name('serviceused.edit');
+    Route::put('/{id}', [ServiceusedController::class, 'update'])->name('serviceused.update');
+    Route::delete('/{id}', [ServiceusedController::class, 'destroy'])->name('serviceused.destroy');
 });

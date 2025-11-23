@@ -32,7 +32,19 @@
                                             <td>{{ $proposal->number }}</td>
                                             <td>{{ $proposal->year ?? '-' }}</td>
                                             <td>{{ $proposal->description ?? '-' }}</td>
-                                            <td>{{ $proposal->status ?? '-' }}</td>
+                                            <td>
+                                                @php
+                                                    $badge =
+                                                        [
+                                                            'pending' => 'warning',
+                                                            'agreed' => 'success',
+                                                            'rejected' => 'danger',
+                                                        ][$proposal->status ?? ''] ?? 'secondary';
+                                                @endphp
+                                                <span class="badge bg-{{ $badge }}">
+                                                    {{ ucfirst($proposal->status ?? '-') }}
+                                                </span>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

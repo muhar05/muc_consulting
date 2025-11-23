@@ -6,6 +6,7 @@ use App\Models\activity\TimesheetModel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rule;
 
 class TimesheetController extends Controller
 {
@@ -15,8 +16,12 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $timesheets = TimesheetModel::all();
-        return view('timesheet::index', compact('timesheets'));
+        $timesheets = \App\Models\activity\TimesheetModel::all();
+
+        // Ambil semua employee dari database HRD
+        $employeeList = \App\Models\hrd\EmployeesModel::pluck('fullname', 'id')->toArray();
+
+        return view('timesheet::index', compact('timesheets', 'employeeList'));
     }
 
     /**
@@ -25,7 +30,10 @@ class TimesheetController extends Controller
      */
     public function create()
     {
-        return view('timesheet::create');
+        // Ambil data employee dan serviceused untuk select option
+        $employees = \App\Models\hrd\EmployeesModel::all();
+        $serviceuseds = \App\Models\marketing\ServiceusedModel::all();
+        return view('timesheet::create', compact('employees', 'serviceuseds'));
     }
 
     /**
@@ -35,7 +43,28 @@ class TimesheetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'date' => 'required|date',
+            'timestart' => 'required|date_format:H:i',
+            'timefinish' => 'required|date_format:H:i',
+            'employees_id' => [
+                'required',
+                Rule::exists('mysql_hrd.employees', 'id'),
+            ],
+            'serviceused_id' => 'required|exists:serviceused,id',
+            'description' => 'nullable|string',
+        ]);
+
+        \App\Models\activity\TimesheetModel::create([
+            'date' => $request->date,
+            'timestart' => $request->timestart . ':00',
+            'timefinish' => $request->timefinish . ':00',
+            'employees_id' => $request->employees_id,
+            'serviceused_id' => $request->serviceused_id,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('timesheet.index')->with('success', 'Timesheet created successfully.');
     }
 
     /**
@@ -92,6 +121,13 @@ class TimesheetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $timesheet = \App\Models\activity\TimesheetModel::findOrFail($id);
+        $timesheet->delete();
+
+        if (request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return redirect()->route('timesheet.index')->with('success', 'Timesheet deleted successfully.');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Modules\Timesheet\Http\Controllers;
 
+use App\Models\activity\TimesheetModel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,8 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        return view('timesheet::index');
+        $timesheets = TimesheetModel::all();
+        return view('timesheet::index', compact('timesheets'));
     }
 
     /**
@@ -53,7 +55,8 @@ class TimesheetController extends Controller
      */
     public function edit($id)
     {
-        return view('timesheet::edit');
+        $timesheet = \App\Models\activity\TimesheetModel::findOrFail($id);
+        return view('timesheet::edit', compact('timesheet'));
     }
 
     /**
@@ -64,7 +67,22 @@ class TimesheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'date' => 'required|date',
+            'timestart' => 'required|date_format:H:i',
+            'timefinish' => 'required|date_format:H:i',
+            'description' => 'nullable|string',
+        ]);
+
+        $timesheet = \App\Models\activity\TimesheetModel::findOrFail($id);
+        $timesheet->update([
+            'date' => $request->date,
+            'timestart' => $request->timestart . ':00',
+            'timefinish' => $request->timefinish . ':00',
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('timesheet.index')->with('success', 'Timesheet updated successfully.');
     }
 
     /**

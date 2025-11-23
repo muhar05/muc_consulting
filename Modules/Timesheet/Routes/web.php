@@ -1,4 +1,6 @@
 <?php
+use Modules\Timesheet\Http\Controllers\TimesheetController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,5 +14,8 @@
 */
 
 Route::prefix('timesheet')->group(function() {
-    Route::get('/', 'TimesheetController@index');
+    Route::get('/', [TimesheetController::class, 'index'])->name('timesheet.index');
+    Route::get('/index', [TimesheetController::class, 'index']);
+    Route::get('/{id}/edit', [TimesheetController::class, 'edit'])->name('timesheet.edit');
+    Route::put('/{id}', [TimesheetController::class, 'update'])->name('timesheet.update');
 });
